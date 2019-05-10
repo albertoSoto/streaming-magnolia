@@ -1,1 +1,1 @@
-# streaming-magnolia
+# stream
