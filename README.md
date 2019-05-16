@@ -11,9 +11,9 @@ Based on Magnolia 6.0
 ![Magnolia-streaming-module](readme/magnolia-streaming.jpg)
 
 ## Features
-> Magnolia has grown so much that now is really hard achieving new features. The product is mature enough to solve most of any companies problems. Within the DAM Module you can serve multimedia files including S3 storage from AWS through a plugin. 
+> Magnolia has grown so much that now is really hard achieving new features. The product is mature enough to solve most of any company problems. Within the DAM Module you can serve multimedia files including S3 storage from AWS through a plugin. 
 
-> *Problem*: When serving the file as a video it will load all the file which is a HUGE problem on rendering context. 
+> *Problem*: When serving the file as a video it will load all the file into the request which is a HUGE problem on rendering context. 
 The Magnolia Streaming module allows you to integrate big videos without worring about the size. The file gets open in a non blocking way (JCR works with LazyInputStream) and only is returned the amount of mandatory information. After that, it releases the stream.  
 
 - Adds Spring MVC 5 support in the Magnolia filter chain in a professional way
@@ -35,7 +35,7 @@ The Magnolia Streaming module allows you to integrate big videos without worring
 > A controller with demo files is included 
 - Although the main concept of the project is not providing webcomponents there are base components as an example to work with it.
 
-##Behaviour
+## Behaviour
 
 > Download profile of conventional streaming from DAMModule
 
