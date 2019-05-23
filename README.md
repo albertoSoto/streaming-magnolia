@@ -1,10 +1,12 @@
 # Magnolia Streaming - Retos digitales 2019  
 
-Magnolia low level project integrating Spring MVC 5 as a filter chain into the Magnolia context.
+This project is part of the competition Retos Digitales 2019 from Magnolia International. 
+Contest 4: "Próxima funcionalidad estrella de Magnolia" or next incoming Magnolia functionality
 
-Allows streaming DAM Assets with header-range control, splitting files in 1Mb chunks, generating a professional environment for video streaming.
 
-Uncomment Web flux dependency in magnolia module pom to activate Spring WebFlux with MVC.
+> It's Magnolia low level project integrating Spring MVC 5 as a filter chain into the Magnolia context, allowing streaming DAM Assets with header-range control, splitting files in 5Mb chunks (by default), generating a professional environment for video streaming.
+
+Note: Uncomment Web flux dependency in magnolia module pom to activate Spring WebFlux with MVC.
 
 Based on Magnolia 6.0
 
@@ -14,7 +16,7 @@ Based on Magnolia 6.0
 > Magnolia has grown so much that now is really hard achieving new features. The product is mature enough to solve most of any company problems. Within the DAM Module you can serve multimedia files including S3 storage from AWS through a plugin. 
 
 > *Problem*: When serving the file as a video it will load all the file into the request which is a HUGE problem on rendering context. 
-The Magnolia Streaming module allows you to integrate big videos without worring about the size. The file gets open in a non blocking way (JCR works with LazyInputStream) and only is returned the amount of mandatory information. After that, it releases the stream.  
+The Magnolia Streaming module allows you to integrate big videos without taking care about it's size. The file gets open in a non blocking way (JCR works with LazyInputStream) and only is returned the amount of mandatory information. After that, it releases the stream.  
 
 - Adds Spring MVC 5 support in the Magnolia filter chain in a professional way
 - Registers RegionResourceMessageConverter to change behaviour for big files
