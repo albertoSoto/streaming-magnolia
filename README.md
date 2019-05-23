@@ -60,6 +60,22 @@ Custom way:
 - Go to /react-module and type "npm start" task
 - Browse your content and start watching films! 
 
+## Behaviour
+
+> Download profile of conventional streaming from DAMModule
+
+You can see how the file is downloaded at once, and it doesn't allow partial content rendering
+Content rendering is trough a blocking response and it does not allow changing easy the cursor or video timing
+
+![Original-streaming](readme/streaming-original.jpg)
+
+> Download profile of conventional streaming from DAMModule
+
+Here you are the final behaviour. Time response is much faster and the browser comunicates with the server generating small requests of 1M.
+The browser is not block, and changing from one time to another is much faster. 
+
+![Performance-streaming](readme/streaming-performance.jpg)
+
 ## Components provided
 
 > Project target: Rendering engine
@@ -88,23 +104,6 @@ If you will not need the rest point PLEASE **delete the following files**:
 
 - mgnl-bootstrap/streaming-magnolia/userroles.anonymous.xml
 - mgnl-bootstrap/streaming-magnolia/config.server.filters.addCORSHeaders.xml 
-
-
-## Behaviour
-
-> Download profile of conventional streaming from DAMModule
-
-You can see how the file is downloaded at once, and it doesn't allow partial content rendering
-Content rendering is trough a blocking response and it does not allow changing easy the cursor or video timing
-
-![Original-streaming](readme/streaming-original.jpg)
-
-> Download profile of conventional streaming from DAMModule
-
-Here you are the final behaviour. Time response is much faster and the browser comunicates with the server generating small requests of 1M.
-The browser is not block, and changing from one time to another is much faster. 
-
-![Performance-streaming](readme/streaming-performance.jpg)
 
 
 ## Information on Magnolia CMS

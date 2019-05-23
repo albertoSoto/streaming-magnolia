@@ -1,4 +1,4 @@
-title: main-streaming-page
+title: light-streaming.pages.main-streaming-page.title
 templateScript: /light-streaming/templates/pages/main-streaming-page.ftl
 renderType: freemarker
 dialog: light-streaming:pages/main-streaming-page

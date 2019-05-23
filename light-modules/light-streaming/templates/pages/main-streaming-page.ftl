@@ -8,7 +8,6 @@
     <meta name="description" content="${content.description!""}"/>
     <meta name="keywords" content="${content.keywords!""}"/>
 
-    <link rel="stylesheet" href="${ctx.contextPath}/.resources/light-streaming/webresources/video-react.css">
  [#--   <link href="https://vjs.zencdn.net/7.5.4/video-js.css" rel="stylesheet">
     <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
     <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
@@ -35,15 +34,12 @@
 <body class="main-streaming-page ${cmsfn.language()}">
 
 <div class="container">
-    <h1>main-streaming-page works!${ctx.contextPath}</h1>
+    <h1>${ctx.contextPath}</h1>
 </div>
-<div id="app" class="toma"></div>
-<div id="app2" class="toma"></div>
 [@cms.area name="main"/]
 [#-- use resfn to load all js which matches the globbing pattern or link resources manually or via theme --]
 [#-- ${resfn.js(["/light-streaming/.*js"])!} --]
 [#--<script src='https://vjs.zencdn.net/7.5.4/video.js'></script>--]
-<script src='${ctx.contextPath}/.resources/light-streaming/webresources/sandboxVideo-bundle.js'></script>
 
 </body>
 </html>
