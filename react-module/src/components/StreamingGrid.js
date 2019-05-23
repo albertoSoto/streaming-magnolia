@@ -6,7 +6,7 @@ class StreamingItem extends Component {
     render() {
         const item = this.props.obj;
         let imgLink = "/assets/img/faces/face-1.jpg";
-        const bgImage = "https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=200&q=75&w=200";
+        const bgImage = "/assets/img/open-expo-logo-2.jpg";
         let isEmpty = !item.imageLink;
         if (!isEmpty) {
             console.log(item.imageLink);
