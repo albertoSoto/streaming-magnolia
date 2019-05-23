@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.albertosoto.mgnl.rd2019</groupId>
-        <artifactId>mgnl-rd2019-parent</artifactId>
+        <artifactId>streaming-magnolia-root</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
