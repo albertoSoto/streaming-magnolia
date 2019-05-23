@@ -13,29 +13,66 @@ Based on Magnolia 6.0
 ![Magnolia-streaming-module](readme/magnolia-streaming.jpg)
 
 ## Features
-> Magnolia has grown so much that now is really hard achieving new features. The product is mature enough to solve most of any company problems. Within the DAM Module you can serve multimedia files including S3 storage from AWS through a plugin. 
+> Magnolia has grown so much that now is really hard achieving new features. The product is mature enough to solve most of any company problems. Within the DAM Module you can serve multimedia files including from AWS S3 storage through a plugin. 
 
-> *Problem*: When serving the file as a video it will load all the file into the request which is a HUGE problem on rendering context. 
-The Magnolia Streaming module allows you to integrate big videos without taking care about it's size. The file gets open in a non blocking way (JCR works with LazyInputStream) and only is returned the amount of mandatory information. After that, it releases the stream.  
+> *Problem*: When serving a video file with Magnolia it will load all the file into the request which is a HUGE problem on rendering context. The Magnolia Streaming module allows you to integrate big videos without taking care about it's size. The file gets open in a non blocking way (JCR works with LazyInputStream) and only is returned the amount of mandatory and requested information. After that, it releases the stream which causes a better server load control.   
 
 - Adds Spring MVC 5 support in the Magnolia filter chain in a professional way
 - Registers RegionResourceMessageConverter to change behaviour for big files
 - Provides basic video components for video streaming
 - Improves video performance for partial file streaming
 - Can improve to the next level with a good cache configuration
-
+- Includes a basic content app for managing video asset provided by rest api
+- (Optional) Includes a configuration in a light module for basic based video component
+- (Optional) Includes a React project rendering your own streaming portal
 
 ## Usage
-> Just compile the project and execute it as a magnolia bundle. 
+> Step 1 - Just compile the project and execute it as a magnolia bundle. 
 
 - Download the full project with maven and java 1.8 already installed in your computer
 - Deploy the generated war in your server
-- Works as a bundle. Copy the module into your project directly if you need it. 
+- Works as a bundle. Copy the module into your project directly if you need it.
+- Create a video component and check how it reaches com.albertosoto.mgnl.rd2019.spring.controller.StreamingController.regionStreaming
+
+> The next steps are optional!
+
+> Step 2 - Use the provided component or adapt the video component to your needs. 
+
+- You have a light-module called "light-streaming" with a very basic "Streaming Video Component"
+- Create a page an add the component to it with a DAM asset
+- Modify it as you need. The component is only an example
+
+> Step 3 - Configure your media browser (optional)
+
+- Open the content app for video located at Edit apps > Streaming
+- Upload your videos to DAM module and configure your portal
+
+> Step 4 - Launch the react application (optional)
+
+- We have set up roles to consume the rest api service via a react application
+- Go to /react-module and type "npm install". Will install dependencies.
+- Point react-module/src/constants.js to your magnolia instance
+- Enable CORS on your browser
+- Go for "npm start" task
+ 
 
 ## Components provided
 
-> A controller with demo files is included 
+> Project target: Rendering engine
+
+> Light module: A controller with demo files is included 
 - Although the main concept of the project is not providing webcomponents there are base components as an example to work with it.
+
+> Content app: A content app is created to manage your video assets
+
+- It will help you check faster how it works!
+- You can consume data through rest api 
+
+> React app: Popcorn time is on magnolia
+
+- Compile the react app pointing it to your magnolia instance
+
+> Magnolia CORS filter and anonymous user roles  
 
 ## Behaviour
 
