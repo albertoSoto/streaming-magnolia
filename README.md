@@ -4,7 +4,7 @@ This project is part of the competition Retos Digitales 2019 from Magnolia Inter
 Contest 4: "Próxima funcionalidad estrella de Magnolia" or next incoming Magnolia functionality
 
 
-> It's Magnolia low level project integrating Spring MVC 5 as a filter chain into the Magnolia context, allowing streaming DAM Assets with header-range control, splitting files in 5Mb chunks (by default), generating a professional environment for video streaming.
+> It's a Magnolia low level project integrating Spring MVC 5 as a filter chain into the Magnolia context, allowing streaming DAM Assets with header-range control, splitting files in 5Mb chunks (by default), generating a professional environment for video streaming.
 
 Note: Uncomment Web flux dependency in magnolia module pom to activate Spring WebFlux with MVC.
 
@@ -54,25 +54,37 @@ Based on Magnolia 6.0
 - Point react-module/src/constants.js to your magnolia instance
 - Enable CORS on your browser
 - Go for "npm start" task
- 
+- Browse you content and start watching films! 
 
 ## Components provided
 
 > Project target: Rendering engine
 
+- The spring 5 rendering controller with header control for asset streaming has been a very tough target. It has been one of the most challenging targets I have ever done.
+- URI: {magnolia-server}/.spring/streaming?fileRQ=${damAssetURI}
+
 > Light module: A controller with demo files is included 
-- Although the main concept of the project is not providing webcomponents there are base components as an example to work with it.
+- Although the main concept of the project is not providing webComponents there are base components as an example to work with it.
+- Path : /light-modules/light-streaming
 
 > Content app: A content app is created to manage your video assets
 
 - It will help you check faster how it works!
-- You can consume data through rest api 
+- You can consume data through rest api
+- Path: Edit apps > Streaming 
 
 > React app: Popcorn time is on magnolia
 
 - Compile the react app pointing it to your magnolia instance
+- Path: /react-module/dist/streaming-react.html
 
 > Magnolia CORS filter and anonymous user roles  
+
+If you will not need the rest point PLEASE **delete the following files**:
+
+- mgnl-bootstrap/streaming-magnolia/userroles.anonymous.xml
+- mgnl-bootstrap/streaming-magnolia/config.server.filters.addCORSHeaders.xml 
+
 
 ## Behaviour
 
