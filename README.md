@@ -13,7 +13,7 @@ Based on Magnolia 6.0
 ![Magnolia-streaming-module](readme/magnolia-streaming.jpg)
 
 ## Features
-> Magnolia has grown so much that now is really hard achieving new features. The product is mature enough to solve most of any company problems. Within the DAM Module you can serve multimedia files including from AWS S3 storage through a plugin. 
+> Magnolia has grown so much that now is really hard achieving new features. The product is mature enough to solve most of any company problems. Within the DAM Module you can serve multimedia files including AWS S3 storage files via a plugin. 
 
 > *Problem*: When serving a video file with Magnolia it will load all the file into the request which is a HUGE problem on rendering context. The Magnolia Streaming module allows you to integrate big videos without taking care about it's size. The file gets open in a non blocking way (JCR works with LazyInputStream) and only is returned the amount of mandatory and requested information. After that, it releases the stream which causes a better server load control.   
 
@@ -24,7 +24,7 @@ Based on Magnolia 6.0
 - Can improve to the next level with a good cache configuration
 - Includes a basic content app for managing video asset provided by rest api
 - (Optional) Includes a configuration in a light module for basic based video component
-- (Optional) Includes a React project rendering your own streaming portal
+- (Optional) Includes a ReactJS project rendering your own streaming portal
 
 ## Usage
 > Step 1 - Just compile the project and execute it as a magnolia bundle. 
@@ -49,12 +49,16 @@ Based on Magnolia 6.0
 
 > Step 4 - Launch the react application (optional)
 
+Easy way: Open the file html file located at react-module/dist/react-streaming.html
+
+Custom way:
+ 
 - We have set up roles to consume the rest api service via a react application
 - Go to /react-module and type "npm install". Will install dependencies.
 - Point react-module/src/constants.js to your magnolia instance
 - Enable CORS on your browser
-- Go for "npm start" task
-- Browse you content and start watching films! 
+- Go to /react-module and type "npm start" task
+- Browse your content and start watching films! 
 
 ## Components provided
 

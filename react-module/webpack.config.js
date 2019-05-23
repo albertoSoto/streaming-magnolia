@@ -21,7 +21,7 @@ module.exports = {
         extensions: ['*', '.js', '.jsx']
     },
     entry: {
-        sandboxVideo: __dirname + "/src/hello-video.js"
+        MagnoliaStreamingApp: __dirname + "/src/react-mgnl-streaming.js"
         //sandbox: __dirname + "/src/hello-props.js"
     },
     output: {
