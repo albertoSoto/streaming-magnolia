@@ -1,0 +1,45 @@
+{
+  "name": "lince-react",
+  "version": "1.0.0",
+  "description": "Devlab for React consuming Lince services",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "moveLince": "copyfiles -f ../lince-server/target/lince-desktop.jar ../lince-dist",
+    "copy": "copyfiles -f ./dist/*-bundle.js ./dist/*css ../lince-server/src/main/resources/public/js/react"
+  },
+  "author": "",
+  "license": "ISC",
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.1",
+    "react-hot-loader": "^4.3.11",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.22.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "moment": "^2.22.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-moment": "^0.8.4",
+    "react-redux": "^5.1.1",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
+    "rest": "^2.0.0",
+    "video-react": "^0.13.1"
+  }
+}
