@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 class StreamingItem extends Component {
     render() {
         const item = this.props.obj;
-        let imgLink = "/assets/img/faces/face-1.jpg";
-        const bgImage = "/assets/img/open-expo-logo-2.jpg";
+        let imgLink = "assets/img/faces/face-1.jpg";
+        const bgImage = "assets/img/open-expo-logo-2.jpg";
         let isEmpty = !item.imageLink;
         if (!isEmpty) {
             console.log(item.imageLink);
