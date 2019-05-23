@@ -1,0 +1,4 @@
+title: stream-video-simple
+renderType: freemarker
+templateScript: /light-streaming/templates/components/stream-video-simple.ftl
+dialog: light-streaming:components/stream-video-simple

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>rd2019-streaming-magnolia-parent</artifactId>
+        <groupId>com.albertosoto.mgnl.rd2019</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>streaming-magnolia</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>Streaming Magnolia Module</name>
+    <description>
+        Magnolia low level module integrating Spring MVC 5 as a filter chain into the Magnolia context.
+        Allows streaming DAM Assets with header-range control, splitting files in 1Mb chunks, generating a professional environment for video streaming.
+        Uncomment Web flux dependency in this pom to support Reactive programming.
+    </description>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>info.magnolia.bundle</groupId>
+                <artifactId>magnolia-bundle-parent</artifactId>
+                <version>${magnoliaBundleVersion}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>info.magnolia</groupId>
+            <artifactId>magnolia-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia</groupId>
+            <artifactId>magnolia-rendering</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia</groupId>
+            <artifactId>magnolia-templating</artifactId>
+        </dependency>
+        <!-- magnolia-jsonfn -->
+        <dependency>
+            <groupId>info.magnolia.templating</groupId>
+            <artifactId>magnolia-jsonfn</artifactId>
+            <version>${jsonfnVersion}</version>
+        </dependency>
+        <!-- From project -->
+        <dependency>
+            <groupId>info.magnolia.groovy</groupId>
+            <artifactId>magnolia-groovy</artifactId>
+        </dependency>
+        <!-- Rest Tools -->
+        <dependency>
+            <groupId>info.magnolia.rest</groupId>
+            <artifactId>magnolia-rest-integration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.rest</groupId>
+            <artifactId>magnolia-rest-tools</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.rest</groupId>
+            <artifactId>magnolia-rest-content-delivery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.rest</groupId>
+            <artifactId>magnolia-rest-services</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.imaging</groupId>
+            <artifactId>magnolia-imaging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.dam</groupId>
+            <artifactId>magnolia-dam-jcr</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.dam</groupId>
+            <artifactId>magnolia-dam-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.dam</groupId>
+            <artifactId>magnolia-dam-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.dam</groupId>
+            <artifactId>magnolia-dam-templating</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.site</groupId>
+            <artifactId>magnolia-site</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.site</groupId>
+            <artifactId>magnolia-site-app</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.magnolia.blossom</groupId>
+            <artifactId>magnolia-module-blossom</artifactId>
+            <version>${blossomVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${springVersion}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-webflux -->
+    <!--    <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
+            <version>${springVersion}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${springVersion}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- For @Valid - JSR-303 Bean Validation API -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.3.1.Final</version>
+        </dependency>
+        <!-- Dependencias convenientes para Spring MVC -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.9</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.9</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
+        </dependency>
+        <!-- TEST -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>${javaVersion}</source>
+                    <target>${javaVersion}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <!-- default resources configuration which will filter the module descriptor -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>META-INF/magnolia/*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>magnolia.public</id>
+            <url>https://nexus.magnolia-cms.com/content/groups/public</url>
+            <snapshots>
+            </snapshots>
+        </repository>
+        <!-- IF YOU NEED MODULES FROM THE ENTERPRISE VERSION, UNCOMMENT THE FOLLOWING REPOSITORY -->
+        <!--
+        <repository>
+          <id>magnolia.enterprise.releases</id>
+          <url>https://nexus.magnolia-cms.com/content/repositories/magnolia.enterprise.releases</url>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+        -->
+        <repository>
+            <id>vaadin-addons</id>
+            <url>https://maven.vaadin.com/vaadin-addons</url>
+        </repository>
+    </repositories>
+
+</project>

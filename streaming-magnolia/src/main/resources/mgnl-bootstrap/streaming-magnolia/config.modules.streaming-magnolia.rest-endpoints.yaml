@@ -1,0 +1,7 @@
+'rest-endpoints': 
+  jcr:primaryType: 'mgnl:content'
+  'streaming-data':
+    'class': 'info.magnolia.rest.service.node.definition.ConfiguredNodeEndpointDefinition'
+    'implementationClass': 'com.albertosoto.mgnl.rd2019.restpoints.v1.BrowseMediaEndPoint'
+
+

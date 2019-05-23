@@ -1,0 +1,14 @@
+title: main-streaming-page
+templateScript: /light-streaming/templates/pages/main-streaming-page.ftl
+renderType: freemarker
+dialog: light-streaming:pages/main-streaming-page
+visible: true
+
+areas:
+  main:
+    availableComponents:
+      stream-video-simple:
+        id: light-streaming:components/stream-video-simple
+      video:
+        id: mtk:components/video
+

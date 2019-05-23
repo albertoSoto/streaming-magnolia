@@ -1,0 +1,22 @@
+datasource:
+  workspace: mediaCenter
+  rootPath: /
+  namespaces:
+    lib: https://www.magnolia-travel.com/jcr/1.0/lib
+  autoCreate: true
+#see https://documentation.magnolia-cms.com/display/DOCS60/Custom+fields
+model:
+  nodeType: lib:media
+  properties:
+    - name: title
+    - name: description
+    - name: active
+      type: Boolean
+    - name: image
+      type: asset
+    - name: imdb
+    - name: cast
+    - name: publish_date
+      type: Date
+    - name: video
+      type: asset

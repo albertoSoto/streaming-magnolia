@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd" >
+<module>
+  <name>streaming-magnolia</name>
+  <displayName>${project.name}</displayName>
+  <description>${project.description}</description>
+  <class>com.albertosoto.mgnl.rd2019.StreamingModule</class>
+  <versionHandler>com.albertosoto.mgnl.rd2019.setup.StreamingModuleVersionHandler</versionHandler>
+  <version>${project.version}</version>
+
+  <!-- For more information on module descriptor configuration options -->
+  <!-- https://documentation.magnolia-cms.com/display/DOCS/XML-based+module+descriptor -->
+  <dependencies>
+    <dependency>
+      <name>core</name>
+      <version>*</version>
+    </dependency>
+    <dependency>
+      <name>rendering</name>
+      <version>*</version>
+    </dependency>
+    <dependency>
+      <name>templating</name>
+      <version>*</version>
+    </dependency>
+<!--    <dependency>
+      <name>templating-jsp</name>
+      <version>*</version>
+    </dependency>-->
+    <dependency>
+      <name>site</name>
+      <version>*</version>
+    </dependency>
+    <dependency>
+      <name>imaging</name>
+      <version>*</version>
+    </dependency>
+    <dependency>
+      <name>blossom</name>
+      <version>${blossomVersion}/*</version>
+    </dependency>
+    <dependency>
+      <name>rest-services</name>
+      <version>*</version>
+    </dependency>
+    <dependency>
+      <name>rest-tools</name>
+      <version>*</version>
+    </dependency>
+  </dependencies>
+  <servlets>
+    <servlet>
+      <name>SpringMVCDispatcherService</name>
+      <class>org.springframework.web.servlet.DispatcherServlet</class>
+      <mappings>
+        <mapping>/.spring/*</mapping>
+      </mappings>
+      <params>
+        <param>
+          <name>contextConfigLocation</name>
+          <value>classpath:/springMVC-dispatcher-servlet.xml</value>
+        </param>
+      </params>
+    </servlet>
+  </servlets>
+</module>
