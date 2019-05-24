@@ -21,6 +21,8 @@ import java.util.function.Function;
  * 14/05/2019
  *
  * @author berto (alberto.soto@gmail.com)
+ *
+ * Implements reusable methods for Spring controllers through Magnolia
  */
 public abstract class AbstractStreamingController {
 

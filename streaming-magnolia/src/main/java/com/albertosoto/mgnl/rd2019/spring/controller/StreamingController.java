@@ -28,15 +28,47 @@ import java.io.InputStream;
  * com.albertosoto.mgnl.rd2019.spring.controller
  * Class StreamingController
  * 09/05/2019
- *
+ * <p>
  * <p>
  * Adds progressive download support to magnolia via Spring Framework 5
  * <p>
- *
  * <p>
- * Usual Streaming video, as opposed to progressive download, does not need to be downloaded before it plays.
- * It almost plays immediately(5-8sec.) and you can jump further up in the time line, which is impossible on progressive downloads.
  * <p>
+ * <p>
+ * Low level explanation: Magnolia DAM Module renders via DamDownloadServlet an Stream from an Asset in JCR
+ * <p>
+ * The problem is that the stream gets open in a blocking way and sent through the request.
+ * In the inner side, the asset has an LazyInputStream, which means that is does not get open until it really is
+ * on the stream, which causes that the stream gets open several times in a blocking way, creating a possible
+ * bottle neck for users if the server load gets high
+ * <p>
+ * On the client side, the stream is open all time, and in every point the user picks another time in the html5 video
+ * the video starts loading again. That is really painful for the server.
+ * <p>
+ * This implementation focus on the browser request, reading the bytes that it's requesting httpHeader, and sends only
+ * the desired information, which causes a must better performance. On the other hand, the stream gets free faster,
+ * wich makes the server faster to other users and it works in a non blocking way.
+ * <p>
+ * Moreover, the domLoad time drops, which is a better SEO positioning and score finally.
+ * <p>
+ * As the Asset stream is a LazyInputStream, Spring 5 documentation explains the following at their docs:
+ * </p>
+ * <p>
+ * <p>
+ * "LazyInputStream should only be used if no other specific Resource implementation is applicable. In particular,
+ * prefer ByteArrayResource or any of the file-based Resource implementations where possible.
+ * In contrast to other Resource implementations, this is a descriptor for an already opened resource.
+ * Therefore returning true from isOpen(). Do not use an InputStreamResource if you need to keep the resource
+ * descriptor somewhere, or if you need to read from a stream multiple times."
+ * <p>
+ * </p>
+ * <p>
+ * <p>
+ * "Last but not the least, implementations of ClientHttpRequestFactory has a boolean bufferRequestBody that you can,
+ * and should, set to false if you are uploading a large stream. Otherwise, you know, OutOfMemoryError.
+ * As of this writing, SimpleClientHttpRequestFactory (JDK client) and HttpComponentsClientHttpRequestFactory
+ * (Apache HTTP client) support this feature, but not OkHttp3ClientHttpRequestFactory. Again, design oversight."
+ * </p>
  *
  * @author berto (alberto.soto@gmail.com)
  */
@@ -73,45 +105,14 @@ public class StreamingController extends AbstractStreamingController {
         }
     }
 
-
-    /*
-     * Java Spring doc says;
-     * Should only be used if no other specific Resource implementation is applicable. In particular,
-     * prefer ByteArrayResource or any of the file-based Resource implementations where possible.
-     * In contrast to other Resource implementations, this is a descriptor for an already opened resource
-     * - therefore returning true from isOpen(). Do not use an InputStreamResource if you need to keep the resource
-     * descriptor somewhere, or if you need to read from a stream multiple times.
-     * <p>
-     * <p>
-     * As of this writing, spring-web:5.0.2.RELEASE has a ResourceHttpMessageConverter that has a boolean supportsReadStreaming, which if set, and the response type is InputStreamResource, returns InputStreamResource; otherwise it returns a ByteArrayResource. So clearly, you're not the only one that asked for streaming support.
-     * <p>
-     * However, there is a problem: RestTemplate closes the response soon after the HttpMessageConverter runs. Thus, even if you asked for InputStreamResource, and got it, it's no good, because the response stream has been closed. I think this is a design flaw that they overlooked; it should've been dependent on the response type. So unfortunately, for reading, you must consume the response fully; you can't pass it around if using RestTemplate.
-     * <p>
-     * Writing is no problem though. If you want to stream an InputStream, ResourceHttpMessageConverter will do it for you. Under the hood, it uses org.springframework.util.StreamUtils to write 4096 bytes at a time from the InputStream to the OutputStream.
-     * <p>
-     * Some of the HttpMessageConverter support all media types, so depending on your requirement, you may have to remove the default ones from RestTemplate, and set the ones you need, being mindful of their relative ordering.
-     * <p>
-     * Last but not the least, implementations of ClientHttpRequestFactory has a boolean bufferRequestBody that you can, and should, set to false if you are uploading a large stream. Otherwise, you know, OutOfMemoryError. As of this writing, SimpleClientHttpRequestFactory (JDK client) and HttpComponentsClientHttpRequestFactory (Apache HTTP client) support this feature, but not OkHttp3ClientHttpRequestFactory. Again, design oversight.
-     * <p>
-     * <p>
-     * <p>
-     * Full support for heading and streaming profileService allowing jumps into specific times for any browser
-     * Chromium supported
-     * <p>
-     * /dam/jcr:7ecd4045-45a0-4c81-b2b6-f4c4b0cd24ad/<whatever, this is ignored anyway
-     * Translates info.magnolia.dam.core.download.DamDownloadServlet to Spring 5
-     * <p>
-     * > endless loop
-     * <p>
-     * https://stackoverflow.com/questions/36379835/getting-inputstream-with-resttemplate
-     *
-
-     */
-
-
     /**
+     * Progressive download support
+     * <p>
      * This is the final achievement
      * Allows mini request of 1M, instead of sending to whole file
+     * <p>
+     * Full support for heading and streaming profileService allowing jumps into specific times for any browser
+     * Translates info.magnolia.dam.core.download.DamDownloadServlet to Spring 5
      *
      * @param fileRQ  dam uri
      * @param headers httpHeader by IoC
