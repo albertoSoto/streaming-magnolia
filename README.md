@@ -102,8 +102,11 @@ The browser is not block, and changing from one time to another is much faster.
 
 If you will not need the rest point PLEASE **delete the following files**:
 
-- mgnl-bootstrap/streaming-magnolia/userroles.anonymous.xml
-- mgnl-bootstrap/streaming-magnolia/config.server.filters.addCORSHeaders.xml 
+
+- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)  mgnl-bootstrap/streaming-magnolia/userroles.anonymous.xml
+- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) mgnl-bootstrap/streaming-magnolia/config.server.filters.addCORSHeaders.xml 
+
+
 
 
 ## Information on Magnolia CMS

@@ -28,28 +28,15 @@ import java.io.InputStream;
  * com.albertosoto.mgnl.rd2019.spring.controller
  * Class StreamingController
  * 09/05/2019
+ *
  * <p>
- * Streaming video, as opposed to progressive download, does not need to be downloaded before it plays. It almost plays
- * immediately(5-8sec.) and you can jump further up in the time line, which is impossible on progressive downloads.
+ * Adds progressive download support to magnolia via Spring Framework 5
  * <p>
- * Possible components:
- * https://hls-js.netlify.com/demo/
- * https://github.com/video-dev/hls.js/
- * https://github.com/streamroot/videojs-hlsjs-plugin
+ *
  * <p>
- * Support ideas:
- * https://streamroot.io/streamroot-dna/
- * http://www.miracletutorials.com/s3-streaming-video-with-cloudfront/
- * https://docs.aws.amazon.com/es_es/AmazonCloudFront/latest/DeveloperGuide/on-demand-video.html
- * https://springjavatutorial.blogspot.com/2013/06/xuggler-video-conversion-mov-to-mp4.html
+ * Usual Streaming video, as opposed to progressive download, does not need to be downloaded before it plays.
+ * It almost plays immediately(5-8sec.) and you can jump further up in the time line, which is impossible on progressive downloads.
  * <p>
- * <p>
- * Extensions:
- * https://github.com/sevensource/magnolia-module-keycloak-security
- * https://github.com/vpro/magnolia-module-vpro-keycloak
- * https://github.com/vpro/jcr-criteria
- * https://buddhimawijeweera.wordpress.com/2011/05/21/using-webcam-with-a-java-application/
- * https://www.peterbeard.co/blog/post/writing-a-red5-java-web-app-to-handle-rtmp-streams/
  *
  * @author berto (alberto.soto@gmail.com)
  */
@@ -122,7 +109,6 @@ public class StreamingController extends AbstractStreamingController {
      */
 
 
-
     /**
      * This is the final achievement
      * Allows mini request of 1M, instead of sending to whole file
@@ -154,38 +140,6 @@ public class StreamingController extends AbstractStreamingController {
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null);
     }
 
-    /**
-     * Creates a temp file by request
-     * Basic approach for performance analysis
-     * Take care with HD temp files!!! Deletes folder after finishing
-     *
-     * @param fileRQ fileRQ jcr uri + file name as happens in Damservlet
-     * @param headers httpHeaders via IoC
-     * @return InputStream as result of a lazy file content
-     * @throws IOException e
-     */
-    @RequestMapping(value = "/example/streaming/toTmpFile", method = RequestMethod.GET)
-    public ResponseEntity<Resource> jcrStreaming(@RequestParam String fileRQ
-            , @RequestHeader HttpHeaders headers) throws IOException {
-        log.info("HEADER STREAMING", headers.getRange());
-        try {
-            Asset asset = getAssetBasedOnIdentifier(fileRQ);
-            if (asset != null) {
-                InputStream in = asset.getContentStream();
-                File file = File.createTempFile("mgnl-", "." + StringUtils.substringAfterLast(asset.getFileName(), "."));
-                FileOutputStream out = new FileOutputStream(file);
-                IOUtils.copyLarge(in, out);
-                out.close();
-                UrlResource video = new UrlResource(file.toURI());
-                ResponseEntity<Resource> response = getValidResponse(video, asset.getMimeType());
-                file.deleteOnExit();
-                return response;
-            }
-        } catch (IOException e) {
-            log.error("IO", e);
-        }
-        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null);
-    }
 
     /**
      * Basic render without streaming - old school way
@@ -193,9 +147,10 @@ public class StreamingController extends AbstractStreamingController {
      * @param response servletResponse
      * @throws IOException exception for jcr Data
      */
-    @RequestMapping(value = "/example/staticFullContentJCR", method = RequestMethod.GET)
-    public void getImageAsByteArray(HttpServletResponse response) throws IOException {
-        Asset asset = getAssetBasedOnIdentifier(EXAMPLE_JCR_URI);
+    @RequestMapping(value = "/jcr-full-stream", method = RequestMethod.GET)
+    public void getImageAsByteArray(HttpServletResponse response,
+                                    @RequestParam(required = false, defaultValue = EXAMPLE_JCR_URI) String jcrPath) throws IOException {
+        Asset asset = getAssetBasedOnIdentifier(jcrPath);
         InputStream in = asset.getContentStream();
         response.setContentType(asset.getMimeType());
         IOUtils.copy(in, response.getOutputStream());
@@ -208,9 +163,10 @@ public class StreamingController extends AbstractStreamingController {
      * @return Resource
      * @throws IOException exception for file not found
      */
-    @GetMapping("/example/staticFileStreaming")
-    public ResponseEntity<Resource> downloadFile2() throws IOException {
-        File file = new File(EXAMPLE_FILE_URI);
+    @GetMapping("/partial-file-stream")
+    public ResponseEntity<Resource> fileBasedStream(@RequestParam(required = false, defaultValue = EXAMPLE_FILE_URI) String filePath
+    ) throws IOException {
+        File file = new File(filePath);
         UrlResource video = new UrlResource(file.toURI());
         return getValidResponse(video, null);
     }

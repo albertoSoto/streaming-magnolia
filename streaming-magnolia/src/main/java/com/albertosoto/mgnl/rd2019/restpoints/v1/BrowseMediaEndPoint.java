@@ -46,14 +46,12 @@ import java.util.List;
 public class BrowseMediaEndPoint<D extends EndpointDefinition> extends AbstractEndpoint<D> {
     private static final String REPO = "mediaCenter";
     private  DamTemplatingFunctions dam;
-    private ImagingTemplatingFunctions img;
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 
-    public BrowseMediaEndPoint(D endpointDefinition, DamTemplatingFunctions dam,ImagingTemplatingFunctions img) {
+    public BrowseMediaEndPoint(D endpointDefinition, DamTemplatingFunctions dam) {
         super(endpointDefinition);
         this.dam = dam;
-        this.img = img;
     }
 
     @Path("/getAll")
