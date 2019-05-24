@@ -3,8 +3,9 @@
 This project is part of the competition Retos Digitales 2019 from Magnolia International. 
 Contest 4: "Próxima funcionalidad estrella de Magnolia" or next incoming Magnolia functionality
 
+> New feature: Implements progressive download into Magnolia. 
 
-> It's a Magnolia low level project integrating Spring MVC 5 as a filter chain into the Magnolia context, allowing streaming DAM Assets with header-range control, splitting files in 5Mb chunks (by default), generating a professional environment for video streaming.
+> It's a Magnolia low level project integrating Spring MVC 5 as a filter chain into the Magnolia context, allowing streaming DAM Assets with header-range control, splitting files in customizable mb chunks (by default 5MB), generating a professional environment for video streaming.
 
 Note: Uncomment Web flux dependency in magnolia module pom to activate Spring WebFlux with MVC.
 
@@ -119,7 +120,7 @@ Low level explanation: Magnolia DAM Module renders via DamDownloadServlet an Str
 - In the inner side, the asset has an LazyInputStream, which means that is does not get open until it really is on the stream, which causes that the stream gets open several times in a blocking way, creating a possible bottle neck for users if the server load gets high.
 - On the client side, the stream is open all time, and in every point the user picks another time in the html5 video the video starts loading again. That is really painful for the server.
 
-This implementation focus on the browser request, reading the bytes that it's requesting httpHeader, and sends only the desired information, which causes a must better performance. On the other hand, the stream gets free faster, wich makes the server faster to other users and it works in a non blocking way.
+This implementation focus on the browser request, reading the bytes that it's requesting httpHeader, and sends only the desired information, which causes a must better performance. On the other hand, the stream gets free earlier, wich makes the server faster to other users and it works in a non blocking way.
 
 Moreover, the domLoad time drops, which is a better SEO positioning and score finally.
 
@@ -127,7 +128,7 @@ As the Asset stream is a LazyInputStream, Spring 5 documentation explains the fo
 
 - "LazyInputStream should only be used if no other specific Resource implementation is applicable. In particular, prefer ByteArrayResource or any of the file-based Resource implementations where possible. In contrast to other Resource implementations, this is a descriptor for an already opened resource. Therefore returning true from isOpen(). Do not use an InputStreamResource if you need to keep the resource descriptor somewhere, or if you need to read from a stream multiple times."
 
-- "Last but not the least, implementations of ClientHttpRequestFactory has a boolean bufferRequestBody that you can, and should, set to false if you are uploading a large stream. Otherwise, you know, OutOfMemoryError. As of this writing, SimpleClientHttpRequestFactory (JDK client) and HttpComponentsClientHttpRequestFactory (Apache HTTP client) support this feature, but not Ok Http3ClientHttpRequestFactory. Again, design oversight."
+- "Last but not the least, implementations of ClientHttpRequestFactory has a boolean bufferRequestBody that you can, and should, set to false if you are uploading a large stream. Otherwise, you know, OutOfMemoryError. As of this writing, SimpleClientHttpRequestFactory (JDK client) and HttpComponentsClientHttpRequestFactory (Apache HTTP client) support this feature, but not Ok Http3ClientHttpRequestFactory. Again, design oversight."   
   
 ## Information on Magnolia CMS
 This directory is an extended version of a Magnolia 'blossom module' delivered as a full project.
