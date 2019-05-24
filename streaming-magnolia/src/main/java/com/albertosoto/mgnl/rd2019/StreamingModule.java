@@ -1,10 +1,10 @@
 package com.albertosoto.mgnl.rd2019;
 
+import com.albertosoto.mgnl.rd2019.config.BlossomServletConfiguration;
+import com.albertosoto.mgnl.rd2019.config.StreamingModuleConfiguration;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
 import info.magnolia.module.blossom.module.BlossomModuleSupport;
-import com.albertosoto.mgnl.rd2019.config.StreamingModuleConfiguration;
-import com.albertosoto.mgnl.rd2019.config.BlossomServletConfiguration;
 
 /**
  * This class manages the lifecycle of the mgnl-streaming-blossom-module module. It starts and stops Spring when Magnolia starts up and

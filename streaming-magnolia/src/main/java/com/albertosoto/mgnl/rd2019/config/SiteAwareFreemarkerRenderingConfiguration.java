@@ -40,7 +40,6 @@ import info.magnolia.module.blossom.view.TemplateViewResolver;
 import info.magnolia.module.site.functions.SiteFunctions;
 import info.magnolia.templating.freemarker.Directives;
 import info.magnolia.templating.functions.TemplatingFunctions;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

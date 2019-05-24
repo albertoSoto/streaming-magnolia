@@ -9,14 +9,7 @@ import info.magnolia.module.blossom.preexecution.BlossomHandlerMapping;
 import info.magnolia.module.blossom.view.UuidRedirectViewResolver;
 import info.magnolia.module.blossom.web.BlossomHandlerMethodArgumentResolver;
 import info.magnolia.module.blossom.web.BlossomRequestMappingHandlerAdapter;
-
-import java.util.Collections;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -24,6 +17,8 @@ import org.springframework.web.servlet.HandlerAdapter;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import java.util.Collections;
 
 /**
  * Configuration class for the blossom servlet housing templates and beans used to render them.

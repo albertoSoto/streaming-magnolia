@@ -1,13 +1,13 @@
 # Magnolia Streaming - Retos digitales 2019  
 
 This project is part of the competition Retos Digitales 2019 from Magnolia International. 
-Contest 4: "Próxima funcionalidad estrella de Magnolia" or next incoming Magnolia functionality
+**Area 4: "Próxima funcionalidad estrella de Magnolia"** or next incoming Magnolia functionality
 
 > New feature: Implements progressive download into Magnolia. 
 
 > It's a Magnolia low level project integrating Spring MVC 5 as a filter chain into the Magnolia context, allowing streaming DAM Assets with header-range control, splitting files in customizable mb chunks (by default 5MB), generating a professional environment for video streaming.
 
-Note: Uncomment Web flux dependency in magnolia module pom to activate Spring WebFlux with MVC.
+Note: Uncomment Web flux dependency in streaming-magnolia module pom to activate Spring WebFlux with MVC into the Filter Chain!.
 
 Based on Magnolia 6.0
 
@@ -34,6 +34,12 @@ Based on Magnolia 6.0
 - Deploy the generated war in your server
 - Works as a bundle. Copy the module into your project directly if you need it.
 - Create a video component and check how it reaches com.albertosoto.mgnl.rd2019.spring.controller.StreamingController.regionStreaming
+- Change your streaming chunk size at /modules/streaming-magnolia/config/streamingParameters
+- If Asset is not found will send the default values (set up your default corporate videos)
+- Set server settings for your custom install at mgnl-bootstrap/streaming-magnolia/config.modules.streaming-magnolia.config.streamingParameters.yaml
+
+![Magnolia-streaming-module](readme/config-options.jpg)
+
 
 > The next steps are optional!
 
@@ -50,11 +56,7 @@ Based on Magnolia 6.0
 
 > Step 4 - Launch the react application (optional)
 
-Easy way: Open the file html file located at react-module/dist/react-streaming.html
-
-Custom way:
- 
-- We have set up roles to consume the rest api service via a react application
+- This project set up roles to consume the rest api service via a react application
 - Go to /react-module and type "npm install". Will install dependencies.
 - Point react-module/src/constants.js to your magnolia instance
 - Enable CORS on your browser

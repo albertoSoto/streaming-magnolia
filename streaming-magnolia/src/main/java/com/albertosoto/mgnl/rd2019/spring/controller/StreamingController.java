@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileUrlResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -74,11 +72,13 @@ import java.io.InputStream;
  */
 @Controller
 public class StreamingController extends AbstractStreamingController {
+
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final AssetProviderRegistry assetProviderRegistry;
 
     @Autowired
     public StreamingController() {
+        super();
         this.assetProviderRegistry = Components.getComponent(AssetProviderRegistry.class);
     }
 
@@ -87,29 +87,11 @@ public class StreamingController extends AbstractStreamingController {
         return this.assetProviderRegistry;
     }
 
-
-    private ResponseEntity<Resource> getValidResponse(Resource resource, String mediaTypeTxt) {
-        try {
-            if (resource != null) {
-                ResponseEntity a = new ResponseEntity<Resource>(HttpStatus.OK);
-                return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
-                        .contentType(getValidMediaType(resource, mediaTypeTxt))
-                        .body(resource);
-            } else {
-                //if reach point, is not found
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new FileUrlResource(StringUtils.EMPTY));
-            }
-        } catch (Exception e) {
-            log.error("videoOutputError", e);
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null);
-        }
-    }
-
     /**
      * Progressive download support
      * <p>
      * This is the final achievement
-     * Allows mini request of 1M, instead of sending to whole file
+     * Allows mini request of 1M, instead of sending to whole file (change configuration at CONFIG_MODULE_PATH
      * <p>
      * Full support for heading and streaming profileService allowing jumps into specific times for any browser
      * Translates info.magnolia.dam.core.download.DamDownloadServlet to Spring 5
@@ -144,30 +126,33 @@ public class StreamingController extends AbstractStreamingController {
 
     /**
      * Basic render without streaming - old school way
+     * This response is similiar to DownloadDAMServlet but in Spring 5
+     * Uses module configuration default jcr asset file if any error
      *
      * @param response servletResponse
      * @throws IOException exception for jcr Data
      */
     @RequestMapping(value = "/jcr-full-stream", method = RequestMethod.GET)
     public void getImageAsByteArray(HttpServletResponse response,
-                                    @RequestParam(required = false, defaultValue = EXAMPLE_JCR_URI) String jcrPath) throws IOException {
-        Asset asset = getAssetBasedOnIdentifier(jcrPath);
+                                    @RequestParam(required = false, defaultValue = StringUtils.EMPTY) String jcrPath) throws IOException {
+        Asset asset = getAssetBasedOnIdentifier(StringUtils.defaultIfEmpty(jcrPath, getStreamingConfig().getDefaultJCRItem()));
         InputStream in = asset.getContentStream();
         response.setContentType(asset.getMimeType());
         IOUtils.copy(in, response.getOutputStream());
     }
 
     /**
-     * Static file base example.
-     * Change file uri to try performance
+     * Streaming Static file base example.
+     * Uses module configuration default file if any error
+     * Change file uri to try performance or send desired one
      *
      * @return Resource
      * @throws IOException exception for file not found
      */
     @GetMapping("/partial-file-stream")
-    public ResponseEntity<Resource> fileBasedStream(@RequestParam(required = false, defaultValue = EXAMPLE_FILE_URI) String filePath
+    public ResponseEntity<Resource> fileBasedStream(@RequestParam(required = false, defaultValue = StringUtils.EMPTY) String filePath
     ) throws IOException {
-        File file = new File(filePath);
+        File file = new File(StringUtils.defaultIfEmpty(filePath, getStreamingConfig().getDefaultFileItem()));
         UrlResource video = new UrlResource(file.toURI());
         return getValidResponse(video, null);
     }
