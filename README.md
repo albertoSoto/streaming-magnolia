@@ -107,8 +107,28 @@ If you will not need the rest point PLEASE **delete the following files**:
 - ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) mgnl-bootstrap/streaming-magnolia/config.server.filters.addCORSHeaders.xml 
 
 
+## Technical info
 
+> This information is low level technical info. Go for a coffee and read it carefully
 
+Adds progressive download support to magnolia via Spring Framework 5
+  
+Low level explanation: Magnolia DAM Module renders via DamDownloadServlet an Stream from an Asset in JCR
+
+- The problem is that the stream gets open in a blocking way and sent through the request.
+- In the inner side, the asset has an LazyInputStream, which means that is does not get open until it really is on the stream, which causes that the stream gets open several times in a blocking way, creating a possible bottle neck for users if the server load gets high.
+- On the client side, the stream is open all time, and in every point the user picks another time in the html5 video the video starts loading again. That is really painful for the server.
+
+This implementation focus on the browser request, reading the bytes that it's requesting httpHeader, and sends only the desired information, which causes a must better performance. On the other hand, the stream gets free faster, wich makes the server faster to other users and it works in a non blocking way.
+
+Moreover, the domLoad time drops, which is a better SEO positioning and score finally.
+
+As the Asset stream is a LazyInputStream, Spring 5 documentation explains the following at their docs:
+
+- "LazyInputStream should only be used if no other specific Resource implementation is applicable. In particular, prefer ByteArrayResource or any of the file-based Resource implementations where possible. In contrast to other Resource implementations, this is a descriptor for an already opened resource. Therefore returning true from isOpen(). Do not use an InputStreamResource if you need to keep the resource descriptor somewhere, or if you need to read from a stream multiple times."
+
+- "Last but not the least, implementations of ClientHttpRequestFactory has a boolean bufferRequestBody that you can, and should, set to false if you are uploading a large stream. Otherwise, you know, OutOfMemoryError. As of this writing, SimpleClientHttpRequestFactory (JDK client) and HttpComponentsClientHttpRequestFactory (Apache HTTP client) support this feature, but not Ok Http3ClientHttpRequestFactory. Again, design oversight."
+  
 ## Information on Magnolia CMS
 This directory is an extended version of a Magnolia 'blossom module' delivered as a full project.
 https://docs.magnolia-cms.com
